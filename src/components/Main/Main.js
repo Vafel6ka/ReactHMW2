@@ -2,7 +2,7 @@ import React from 'react';
 import './main.css';
 import Contact from './Contact';
 
-const contacts = [{
+const contactsMOCK = [{
   firstName: "Барней",
   lastName: "Стинсовський",
   phone: "+380956319521",
@@ -34,19 +34,46 @@ const contacts = [{
 }];
 
 class Main extends React.Component{
+  state = {
+    contacts: [...contactsMOCK],
+    search: "default",
+  }
+  search = (e) => {
+    const {value} = e.target;
+    this.setState({ 
+      search: value
+     });
 
+    this.setState({
+      contacts:[
+        ...contactsMOCK.filter((el) => {
+          return(
+            el.firstName.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1 ||
+            el.lastName.toLowerCase().indexOf(this.state.search.toLowerCase()) >-1 ||
+            el.phone.indexOf(this.state.search) >-1
+          );
+        }),
+      ],
+    });
+  };
+    
   render () {
   return (   
     <div className="main">
-      {contacts.forEach(element => {
-        
+      <input type="text" 
+       placeholder="Search"
+        value={this.state.search}
+        onChange={this.search}
+       />
+
+      {this.state.contacts.map(element => (     
         <Contact 
         firstName={element.firstName}
-        lastName={element.firstName}
-        phoneNumber={element.firstName}
+        lastName={element.lastName}
+        phoneNumber={element.phone}
    />
 
-      })
+      ))
     }
     </div>
   );
