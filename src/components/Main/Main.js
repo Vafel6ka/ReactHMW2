@@ -36,7 +36,7 @@ const contactsMOCK = [{
 class Main extends React.Component{
   state = {
     contacts: [...contactsMOCK],
-    search: "default",
+    search: "",
   }
   search = (e) => {
     const {value} = e.target;
@@ -60,7 +60,7 @@ class Main extends React.Component{
   render () {
   return (   
     <div className="main">
-      <input type="text" 
+      <input className="input" type="text" 
        placeholder="Search"
         value={this.state.search}
         onChange={this.search}
